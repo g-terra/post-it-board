@@ -27,7 +27,6 @@ const createPost = async (post) => {
 
     const newPost = {
         id: uuidv4(),
-        title: post.title,
         content: post.content,
         color: post.color,
         createdAt: new Date().toLocaleString(),

@@ -12,7 +12,7 @@ module.exports = {
         'rev-30': '-30deg',
       },
       fontFamily : {
-        title: ['Pacifico'],
+        brand: ['Pacifico'],
       },
       gridTemplateColumns:{
         '1-board': 'repeat(1, minmax(200px, 1fr))',

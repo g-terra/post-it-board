@@ -1,18 +1,34 @@
 import localStoragePostRepository from "../repositories/localStoragePostRepository";
+import remotePostRepository from "../repositories/remotePostRepository";
 
-const postRepository = localStoragePostRepository
 
-const getAllPosts = async (page,pageSize) => {
-  return postRepository.getAllPosts(page,pageSize);
+const getAllPosts = async ({token, board='local', page, pageSize}) => {
+    if (board === 'local') {
+        return localStoragePostRepository.getAllPosts(page, pageSize);
+    }
+
+    return remotePostRepository.getAllPosts(token, board, page, pageSize);
 }
 
-const createPost = async (post) => {
-  return postRepository.createPost(post);
+const createPost = async ({token, board, post}) => {
+
+    console.log(board)
+
+    if (board === 'local') {
+        return localStoragePostRepository.createPost(post);
+    }
+
+    return remotePostRepository.createPost(token, post);
 }
 
-const removePost = async (id) => {
-    console.log("removing post with id: " + id);
-    return postRepository.removePost(id);
+
+const removePost = async ({token, id}) => {
+
+    if (!token) {
+        return localStoragePostRepository.removePost(id);
+    }
+
+    return remotePostRepository.removePost(token, id);
 }
 
 const postService = {

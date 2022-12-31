@@ -1,19 +1,17 @@
-import Navbar from "../navbar/navbar";
+import Navbar from "./navbar/navbar";
 import {Head} from "next/document";
-import Footer from "../footer/footer";
+import Footer from "./footer/footer";
 
 export default function Root({children}) {
     return (
-        <div className='background-light relative h-screen flex flex-col justify-center'>
-            <main
-                className=""
-            >
+        <div className='body'>
+            <div className="page-container">
                 <Navbar/>
-                <div className="flex flex-col justify-center items-start self-center">
+                <div className="content-wrap">
                     {children}
                 </div>
                 <Footer/>
-            </main>
+            </div>
         </div>
     )
 }
