@@ -30,16 +30,12 @@
         @apply text-red-400;
     }
 
-    .body {
-        @apply background-light dark:background-dark
-    }
-
     .page-container {
-        @apply relative min-h-screen
+        @apply relative min-h-screen background-light
     }
 
     .content-wrap {
-        @apply pb-24 w-full flex flex-col items-center justify-center
+        @apply pb-24 w-full  h-full flex flex-col items-center justify-center
     }
 
     .footer {
@@ -192,19 +188,6 @@
         md:grid-rows-[repeat(2,minmax(300px,1fr))]
     }
 
-    .items-list {
-        @apply
-        justify-evenly
-        justify-items-center
-        align-middle
-        items-center p-4
-        gap-4
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        md:grid-cols-3
-        lg:grid-cols-4
-        xl:grid-cols-4
-    }
+
 }
 

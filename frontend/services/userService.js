@@ -1,4 +1,5 @@
-import userRepository from "../repositories/userRepository";
+import userRepository from "../repositories/users/userRepository";
+import forceDelay from "../utils/forceDelay";
 
 const authenticate = async ({email, password}) => {
 
@@ -8,10 +9,10 @@ const authenticate = async ({email, password}) => {
     })
 }
 
-const register = async ({firstName, LastName, email, password}) => {
+const register = async ({firstName, lastName, email, password}) => {
 
     return await userRepository.register({
-        firstName, LastName, email, password
+        firstName, lastName, email, password
     });
 
 }

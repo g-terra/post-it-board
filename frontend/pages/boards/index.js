@@ -1,112 +1,76 @@
-import AuthOnly from "../../components/layout/authOnly";
-import {func} from "prop-types";
-import {useState} from "react";
+import {ListItem, ListViewer} from "../../components/listViewer/listViewer";
+import {useEffect, useState} from "react";
+import boardService from "../../services/boardService";
+import {useSession} from "next-auth/react";
+import Spinner from "../../components/utils/spinner/spinner";
+import {useRouter} from "next/router";
+import styles from "../../components/listViewer/listViewer.module.css";
 
-function Tooltip({content, children}) {
-    const [hover, setHover] = useState(false);
+export default function Home() {
 
-    const handleMouseIn = () => {
-        setHover(true);
+    const router = useRouter();
 
+    const [displayed, setDisplayed] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [totalPages, setTotalPages] = useState(1);
+
+
+    const handleChange = ({page, search, token}) => {
+
+        const request = {
+            page: page,
+            pageSize: 15,
+            search: search
+        }
+
+        if (token) {
+            request.token = token;
+        }
+
+        boardService.getAllBoards(request).then((res) => {
+            setLoading(false);
+            setDisplayed(res.boards);
+            setTotalPages(res.totalPages);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+    }
+
+
+    const handleItemAction = (id) => {
+        return router.push('/boards/' + id)
+    }
+
+
+    const handleCreate = () => {
+        return router.push("/boards/create");
     };
-    const handleMouseOut = () => {
-        setHover(false);
-    };
 
 
-    return <div onMouseOver={handleMouseIn.bind(this)} onMouseOut={handleMouseOut.bind(this)}>
-        {children}
+    return <div className={'h-full w-4/5'}>
         {
-            (hover) && <div className={'absolute z-10 bg-gray-100 rounded-md p-2'}>
-                {content}
-            </div>
+            loading ?
+                <Spinner/> :
+                <>
+                    <div className={'flex justify-center items-center w-full pt-16'}>
+                        <button className={'btn-primary w-1/3'} onClick={handleCreate}>create new board</button>
+                    </div>
+                    <ListViewer
+                        items={displayed}
+                        totalPages={totalPages}
+                        onChange={handleChange}
+                    >
+                        {
+                            displayed.map((item, index) =>
+                                <ListItem key={index} {...item} content={item.postsCount + " posts"}
+                                          action={() => handleItemAction(item.id)}></ListItem>
+                            )
+                        }
+
+                    </ListViewer>
+
+                </>
         }
     </div>
-}
-
-function Owner({avatar, name, surname}) {
-
-    const initials = (name.charAt(0) + surname.charAt(0)).toUpperCase();
-
-    return (
-        <Tooltip content={name + ' ' + surname}>
-            <div className={'grid h-10 w-10 rounded-full bg-red-400 align-middle items-center justify-center'}>
-                <Tooltip content={name + ' ' + surname}/>
-                <div className={
-                    'grid h-10 w-10 rounded-full bg-red-400 align-middle items-center justify-center'
-                }>
-                    {
-                        avatar ?
-                            <img src={avatar} alt={name} className={'h-full w-full rounded-full'}/> :
-                            <p className={'text-primary font-bold text-center'}>
-                                {initials}
-                            </p>
-                    }
-                </div>
-            </div>
-        </Tooltip>
-    );
-}
-
-function BoardView({
-                       title = 'No Title', posts = 0, id = -1, owner = {
-        name: 'name',
-        surname: 'surname',
-        avatar: ''
-    }, onclick
-                   }) {
-    const handleClick = () => {
-        onclick(id)
-    };
-    return (
-        <div className={'w-[200px] h-[200px] bg-sky-300 rounded-2xl shadow shadow-red-100'}>
-            <div className={'w-full h-full flex flex-col justify-start items-start p-4'}>
-                <div className={'w-full flex justify-between items-center'}>
-                    <p className={'text-primary font-bold'}>{title}</p>
-                    <Owner avatar={owner.avatar} name={owner.name} surname={owner.surname}></Owner>
-                </div>
-                <div className={'h-full text-primary font-bold mt-5'}>
-                    Posts: {posts}
-                </div>
-                <div className={'w-full flex justify-end'}>
-                    <button className={'btn-primary'} onClick={handleClick}>check it out</button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function BoardList({
-                       boards
-                   }) {
-    return <div className='items-list'>
-        {
-            boards.map((board, index) => {
-                return <BoardView key={index} {...board}></BoardView>
-            })
-        }
-
-    </div>;
-}
-
-export default function Boards() {
-
-
-    const boards = [
-        {
-            title: 'title',
-            posts: 0,
-            id: 0,
-            owner: {
-                name: 'name',
-                surname: 'surname',
-                avatar: ''
-            }
-        },
-    ];
-    return (
-        <AuthOnly redirect='/boards/local'>
-            <BoardList boards={boards}/>
-        </AuthOnly>
-    )
 }

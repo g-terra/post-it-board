@@ -49,17 +49,29 @@ function TextArea({field, fieldValue, handleChange}) {
 
 
 function Dropbox({field, fieldValue, handleChange}) {
+
+    const [selected, setSelected] = useState(field.initialValue);
+
+    useEffect(() => {
+        handleChange(field.name, field.options[0].value)
+    } , [])
+
+    const handleStateChange = (name, value) => {
+        setSelected(value);
+        handleChange(name, value);
+    }
+
     return (
         <select
             className="text-input"
             name={field.name}
             placeholder={field.placeholder}
-            value={fieldValue}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            value={selected}
+            onChange={(e) => handleStateChange(field.name, e.target.value)}
         >
-            {field.options.map((option) => {
+            {field.options.map((option, index) => {
                 return (
-                    <option value={option.value}>{option.label}</option>
+                    <option key={index} value={option.value}>{option.label}</option>
                 )
             })}
         </select>
@@ -180,7 +192,7 @@ export function FormTemplate({
                            className="btn-primary  w-full"/>
                 </div>
 
-                {/*{footerControls.map((control) => (control))}*/}
+                {footerControls.map((control) => (control))}
 
             </form>
         </div>

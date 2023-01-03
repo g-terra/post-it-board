@@ -1,0 +1,18 @@
+#configure mysql with spring boot and hibernate.
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/postit
+    username: dev
+    password: dev
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+jwt:
+  secret: phBMbBVdhmBLYWlB4d+s6WwFsar+yxMwVD6fqL+JzvgcP48d0FxetiSxdcvtj0n+bPyZ8EoWM2KMLquPZTqZ/gCpru0g0f8QZuysmAthoAsmz8GNgg0MEQlP/5R/WIqwYnmyoFgq/ODpX7HM1ZMmvdjUGrtnnYGvWFNemQkrQLa6OyDmUDSZ1PpcqbJWgc6x9bHFABfVzG8r7NExnogEnw8hZ63PrSFM6Z/cMA==%
+  expiration: 86400000

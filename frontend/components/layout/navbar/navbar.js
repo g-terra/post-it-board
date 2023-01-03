@@ -28,9 +28,9 @@ export default function Navbar() {
         <>
             <div className={'header'}>
 
-                <div className={'flex justify-center items-center order-1'}>
+                <div className={'flex justify-center items-center'}>
                     <NavButton link={'/'} text={'Home'}/>
-                    {isLogged && <NavButton link={'/boards'} text={'boards'}/>}
+                    <NavButton link={'/boards'} text={'Boards'}/>
                 </div>
 
                 <div className={'flex justify-center items-center gap-4 order-first sm:order-2'}>

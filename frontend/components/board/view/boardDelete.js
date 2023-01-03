@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import boardService from "../../../services/boardService";
 
 function Popup({onCancel, onDelete}) {
     return (
@@ -44,12 +45,13 @@ function Popup({onCancel, onDelete}) {
     );
 }
 
-export default function BoardDelete() {
+export default function BoardDelete({onDelete}) {
 
     const [showModal, setShowModal] = useState(false);
 
     const handleDelete = () => {
         setShowModal(false);
+        onDelete();
 
     }
 

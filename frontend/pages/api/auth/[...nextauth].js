@@ -14,7 +14,6 @@ export default NextAuth({
             async authorize(credentials, req) {
                 try {
 
-                    console.log("trying to authenticate")
 
                     const {user, jwt}  = await userService.authenticate(
                         {

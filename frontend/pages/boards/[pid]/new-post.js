@@ -3,8 +3,15 @@ import * as Yup from "yup";
 import {FormTemplate} from "../../../components/utils/generic-form/formTemplate";
 import React from "react";
 import postService from "../../../services/postService";
+import {useSession} from "next-auth/react";
 
 export default function newPost() {
+
+    const router = useRouter()
+
+    const session = useSession();
+
+    const {pid} = router.query
 
 
     const formDef = {
@@ -13,7 +20,7 @@ export default function newPost() {
             {
                 name: 'content',
                 label: 'Content',
-                placeholder: 'add here the content of your post',
+                placeholder: 'add here the content of your posts',
                 initialValue: '',
                 type: 'text-area',
                 minHeight: '140px',
@@ -22,10 +29,10 @@ export default function newPost() {
                 name: 'color',
                 label: 'Color',
                 placeholder: '',
-                initialValue: 'Red',
+                initialValue: 'red',
                 type: 'select',
                 options: [
-                    {value: 'red', label: 'Red' },
+                    {value: 'red', label: 'Red'},
                     {value: 'blue', label: 'Blue'},
                     {value: 'green', label: 'Green'},
                     {value: 'yellow', label: 'Yellow'}
@@ -39,17 +46,26 @@ export default function newPost() {
             }
         },
         validationSchema: Yup.object({
-            content: Yup.string().required('Description is required').max(250, 'content is too long'),
+            content: Yup.string().required('Post cannot be empty').max(250, 'content is too long'),
             color: Yup.string().required('Color is required'),
         }),
 
     }
 
-    const router = useRouter();
-    const {pid} = router.query
     const handleSubmit = (post) => {
-        postService.createPost({board: pid, post}).then((response) => {
-            router.push('/').then(() => window.location.reload())
+
+        const request = {post}
+
+        request.post.board = pid
+
+        if (session.status === 'authenticated') {
+            request.token = session.data.jwt;
+        }
+
+        postService.createPost(
+            request
+        ).then((response) => {
+            return router.push('/boards/' + pid)
         }).catch((error) => {
             console.log(error);
         })

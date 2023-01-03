@@ -1,4 +1,3 @@
-import {useEffect, useState} from "react";
 
 export function Alert({message = '', severity = 'error'}) {
 
@@ -9,7 +8,7 @@ export function Alert({message = '', severity = 'error'}) {
     }
 
     return (
-        <div className={"px-4 py-2 m-2 rounded " + alertType[severity]} role="alert">
+        <div className={"w-3/4 flex flex-col justify-center items-center px-4 py-2 mt-3 mx-12 rounded " + alertType[severity]} role="alert">
             <p> {message}</p>
         </div>
     )

@@ -2,8 +2,12 @@ import * as Yup from "yup";
 import Link from "next/link";
 import {FormTemplate} from "../../components/utils/generic-form/formTemplate";
 import React from "react";
+import userRepository from "../../repositories/users/userRepository";
+import {useRouter} from "next/router";
 
 export default function Register() {
+
+    const router = useRouter();
 
     const formDef = {
         title: 'Register',
@@ -25,7 +29,7 @@ export default function Register() {
             {
                 name: 'email',
                 label: 'Email',
-                placeholder: 'e.g. user@domain.com',
+                placeholder: 'e.g. users@domain.com',
                 initialValue: '',
                 type: 'text',
             },
@@ -46,8 +50,14 @@ export default function Register() {
         ],
         submit: {
             text: 'Create Account',
-            handleSubmit: (values) => {
-                console.log("Registering:", values)
+            handleSubmit: async (values) => {
+                try {
+                    await userRepository.register(values);
+                    alert(`Account created successfully!`);
+                    return router.push('/auth/login');
+                } catch (e) {
+                    alert(e);
+                }
             }
         },
         validationSchema: Yup.object({

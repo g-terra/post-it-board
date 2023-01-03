@@ -18,7 +18,7 @@ export default function Login({ csrfToken }) {
             {
                 name: 'email',
                 label: 'Email',
-                placeholder: 'e.g. user@domain.com',
+                placeholder: 'e.g. users@domain.com',
                 initialValue: '',
                 type: 'text',
             },

@@ -27,7 +27,7 @@ const AlertProvider = (props) => {
         if (alerts.length > 0) {
             setTimeout(() => {
                 _setAlerts(alerts.slice(1))
-            }, 5000)
+            }, 2000)
         }
     }, [alerts])
 
@@ -45,6 +45,8 @@ const AlertProvider = (props) => {
 
 //hook to use the context
 export const useAlertProvider = () => {
+
+    const context = React.useContext(AlertContext)
 
     if (context === undefined) {
         throw new Error('useAlert must be used within a AlertProvider')
