@@ -2,7 +2,6 @@ import * as Yup from "yup";
 import React, {useEffect, useState} from "react";
 import {Alert} from "../alerts/Alert";
 import {v4 as uuidv4} from "uuid";
-import {Field} from "formik";
 
 const defaultDef = {
     title: '',
@@ -148,21 +147,24 @@ export function FormTemplate({
         }
     }, [errors])
 
-    const handleSubmit = (e) => {
+    const handleSubmit =  (e) => {
 
-        console.log("fieldValues:", formState)
+          e.preventDefault()
 
-        e.preventDefault()
+          validationSchema.validate(formState, {abortEarly: false}).catch((err) => {
+              handleErrors(err.errors)
+          })
 
-        validationSchema.validate(formState, {abortEarly: false}).catch((err) => {
-            handleErrors(err.errors)
-        })
+          validationSchema.isValid(formState).then(async (valid) => {
+              if (valid) {
+                  try {
+                      await submit.handleSubmit(formState)
+                  } catch (error){
+                     handleErrors([error.response.data.causes[0].message])
+                  }
+              }
+          })
 
-        validationSchema.isValid(formState).then((valid) => {
-            if (valid) {
-                submit.handleSubmit(formState)
-            }
-        })
 
     }
 

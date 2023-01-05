@@ -46,7 +46,21 @@ async function createBoard(token, group) {
 }
 
 async function removeBoard(token, id) {
-    throw new Error("remove groups not implemented at remoteGroupRepository");
+    try {
+        console.log("removing board: " + id)
+
+        return await axios.delete(baseUrl + "boards?boardId=" + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+
+    } catch (error) {
+        console.log(error.response.data)
+        throw new Error(error.response.data.message)
+    }
 }
 
 

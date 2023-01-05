@@ -95,7 +95,7 @@ export function ListViewer({
                     prev
                 </button>
                 <p className={'text-secondary font-bold'}>
-                    {currentPage} / {totalPages}
+                    {totalPages === 0 ? 0 : currentPage} / {totalPages}
                 </p>
                 <button className={'btn-primary'} onClick={handleNextPage} disabled={disableNext()}> next
                 </button>

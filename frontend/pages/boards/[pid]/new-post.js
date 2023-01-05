@@ -4,12 +4,15 @@ import {FormTemplate} from "../../../components/utils/generic-form/formTemplate"
 import React from "react";
 import postService from "../../../services/postService";
 import {useSession} from "next-auth/react";
+import {useAlertProvider} from "../../../components/utils/alerts/AlertProvider";
+import {error} from "next/dist/build/output/log";
 
 export default function newPost() {
 
     const router = useRouter()
 
     const session = useSession();
+
 
     const {pid} = router.query
 
@@ -41,8 +44,8 @@ export default function newPost() {
         ],
         submit: {
             text: 'Create',
-            handleSubmit: (post) => {
-                handleSubmit(post)
+            handleSubmit: async (post) => {
+                await handleSubmit(post)
             }
         },
         validationSchema: Yup.object({
@@ -52,7 +55,7 @@ export default function newPost() {
 
     }
 
-    const handleSubmit = (post) => {
+    const handleSubmit = async (post) => {
 
         const request = {post}
 
@@ -62,14 +65,10 @@ export default function newPost() {
             request.token = session.data.jwt;
         }
 
-        postService.createPost(
-            request
-        ).then((response) => {
-            return router.push('/boards/' + pid)
-        }).catch((error) => {
-            console.log(error);
-        })
-    };
+        await postService.createPost(request)
+
+        return router.push("/boards/" + pid)
+    }
 
     return (
         <div className={'form-width m-5'}>

@@ -4,6 +4,7 @@ import {FormTemplate} from "../../components/utils/generic-form/formTemplate";
 import Link from "next/link";
 import {getCsrfToken, signIn} from "next-auth/react";
 import {useRouter} from "next/router";
+import {useAlertProvider} from "../../components/utils/alerts/AlertProvider";
 
 
 export default function Login({ csrfToken }) {
@@ -11,6 +12,8 @@ export default function Login({ csrfToken }) {
     const [token, setToken] = React.useState(null)
 
     const router = useRouter();
+
+    const alertProvider = useAlertProvider();
 
     const formDef = {
         title: 'Login',
@@ -41,12 +44,19 @@ export default function Login({ csrfToken }) {
                     callbackUrl: `${window.location.origin}`,
                 }).then(({ok}) => {
                     if (ok) {
-                        router.push('/')
+                        alertProvider.pushAlert({severity: 'success', message: 'Login successful!'});
+                        return router.push('/boards');
                     } else {
-                        alert(`Credentials do not match!`);
+                        alertProvider.pushAlert({
+                            type: 'error',
+                            message: 'Invalid credentials'
+                        })
                     }
                 }).catch(e => {
-                    alert(e);
+                    alertProvider.pushAlert({
+                        type: 'error',
+                        message: 'Something went wrong' + e
+                    })
                 });
             }
         },

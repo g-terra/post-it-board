@@ -1,71 +1,70 @@
 package com.pjatk.tin.postitboard.backend.service;
 
-import com.pjatk.tin.postitboard.backend.domain.Board;
-import com.pjatk.tin.postitboard.backend.domain.Post;
-import com.pjatk.tin.postitboard.backend.domain.User;
+import com.pjatk.tin.postitboard.backend.model.Board;
+import com.pjatk.tin.postitboard.backend.model.User;
 import com.pjatk.tin.postitboard.backend.repository.BoardRepository;
+import com.pjatk.tin.postitboard.backend.controller.request.NewBoardRequest;
+import com.pjatk.tin.postitboard.backend.controller.response.BoardsResponse;
+import com.pjatk.tin.postitboard.backend.controller.response.NewBoardResponse;
 import com.pjatk.tin.postitboard.backend.repository.PostRepository;
-import com.pjatk.tin.postitboard.backend.repository.UserRepository;
-import com.pjatk.tin.postitboard.backend.request.NewBoardRequest;
-import com.pjatk.tin.postitboard.backend.response.BoardsResponse;
-import com.pjatk.tin.postitboard.backend.response.NewBoardResponse;
-import com.pjatk.tin.postitboard.backend.response.PostsByBoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
+    private final SecurityService securityService;
     private final PostRepository postRepository;
 
-    public BoardsResponse getBoards(Principal principal, int pageSize, int page, String search) {
+    public BoardsResponse getBoards(int pageSize, int page, String search) {
 
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        User user = userRepository.findByEmail(principal.getName());
+        User currentUser = securityService.getCurrentUser();
 
-        Page<Board> allByCreator = boardRepository.findAllByCreatorAndNameContaining(user, search, pageable);
+        Page<Board> allByCreator = boardRepository.findAllByCreatorAndNameContaining(currentUser, search, pageable);
 
         return BoardsResponse.from(allByCreator);
     }
 
     @Transactional
-    public NewBoardResponse createBoard(Principal principal, NewBoardRequest request) {
+    public NewBoardResponse createBoard(NewBoardRequest request) {
 
         Board newBoard = request.toBoard();
 
-        User user = userRepository.findByEmail(principal.getName());
+        User creator = securityService.getCurrentUser();
 
-        newBoard.setCreator(user);
+        newBoard.setCreator(creator);
 
         return NewBoardResponse.from(boardRepository.save(newBoard));
     }
 
-    public boolean isUserOwner(Principal principal, Long boardId) {
-        User user = userRepository.findByEmail(principal.getName());
-        Board board = boardRepository.findById(boardId).orElseThrow();
-        return board.getCreator().equals(user);
+    @Transactional
+    public void deleteBoard(Long boardId) {
+
+        Board board = getBoard(boardId);
+
+        postRepository.removeAllByBoard(board);
+
+        boardRepository.delete(board);
+
     }
 
+    public Board getBoard(Long boardId) {
 
-    public PostsByBoardResponse getPosts(Principal principal, Long boardId) {
 
-        boolean userOwner = isUserOwner(principal, boardId);
+        return boardRepository.findById(boardId).orElseThrow(
+                () -> new ResourceNotFoundException("Board not found")
+        );
 
-        if (!userOwner) throw new AccessDeniedException("User is not owner of this board");
-
-        Page<Post> posts = postRepository.findAllByBoardId(boardId, PageRequest.of(0, 10));
-
-        return PostsByBoardResponse.from(posts);
     }
+
 }

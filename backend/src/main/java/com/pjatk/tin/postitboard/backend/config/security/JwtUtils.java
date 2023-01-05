@@ -1,14 +1,12 @@
-package com.pjatk.tin.postitboard.backend.security;
+package com.pjatk.tin.postitboard.backend.config.security;
 
 
 import java.util.Date;
 
-import com.pjatk.tin.postitboard.backend.domain.User;
+import com.pjatk.tin.postitboard.backend.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

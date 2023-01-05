@@ -25,7 +25,7 @@ const getAllPosts = async ({page, pageSize, board}) => {
     if (page && pageSize) {
         return {
             totalItems: filtered.length,
-            totalPages: Math.ceil(all.length / pageSize),
+            totalPages: Math.ceil(filtered.length / pageSize),
             currentPage: page,
             pageSize: pageSize,
             posts: filtered.slice((page - 1) * pageSize, page * pageSize)

@@ -1,6 +1,6 @@
-package com.pjatk.tin.postitboard.backend.response;
+package com.pjatk.tin.postitboard.backend.controller.response;
 
-import com.pjatk.tin.postitboard.backend.domain.Post;
+import com.pjatk.tin.postitboard.backend.model.Post;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;
@@ -49,7 +49,6 @@ public class PostsByBoardResponse {
         public static PostView from(Post post) {
             return PostView.builder()
                     .id(post.getId())
-                    .title(post.getTitle())
                     .color(post.getColor())
                     .content(post.getContent())
                     .creator(post.getCreator().getFirstName() + " " + post.getCreator().getLastName())

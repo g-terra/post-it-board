@@ -1,4 +1,4 @@
-package com.pjatk.tin.postitboard.backend.config;
+package com.pjatk.tin.postitboard.backend.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

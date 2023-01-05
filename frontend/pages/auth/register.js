@@ -4,10 +4,13 @@ import {FormTemplate} from "../../components/utils/generic-form/formTemplate";
 import React from "react";
 import userRepository from "../../repositories/users/userRepository";
 import {useRouter} from "next/router";
+import {useAlertProvider} from "../../components/utils/alerts/AlertProvider";
 
 export default function Register() {
 
     const router = useRouter();
+
+    const alertProvider = useAlertProvider()
 
     const formDef = {
         title: 'Register',
@@ -51,13 +54,11 @@ export default function Register() {
         submit: {
             text: 'Create Account',
             handleSubmit: async (values) => {
-                try {
                     await userRepository.register(values);
-                    alert(`Account created successfully!`);
+                alertProvider.pushAlert({
+                    severity:'success' , message:"Account created!"
+                })
                     return router.push('/auth/login');
-                } catch (e) {
-                    alert(e);
-                }
             }
         },
         validationSchema: Yup.object({

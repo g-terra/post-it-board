@@ -5,7 +5,7 @@ const getAllPosts = async ({token, page, pageSize, board}) => {
     try {
         const {data} = await axios.get(baseUrl + "posts", {
                 params: {
-                    page,
+                    page: page === 0 ? 0 : page - 1,
                     pageSize,
                     boardId: board
                 },
@@ -25,12 +25,39 @@ const getAllPosts = async ({token, page, pageSize, board}) => {
     }
 }
 
-const createPost = async (post) => {
-    throw new Error("create posts not implemented at remotePostRepository");
+const createPost = async ({token, post}) => {
+
+    try {
+        const {data} = await axios.post(baseUrl + "posts", post, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        return data
+
+    } catch (error) {
+        throw new Error(error.response.data.causes[0].message)
+    }
 }
 
-const removePost = async (id) => {
-    throw new Error("remove posts not implemented at remotePostRepository");
+const removePost = async ({token, id}) => {
+    try {
+        console.log("removing post: " + id)
+
+        return await axios.delete(baseUrl + "posts?postId=" + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+
+    } catch (error) {
+        console.log(error.response.data)
+        throw new Error(error.response.data.message)
+    }
 };
 const remotePostRepository = {
     getAllPosts,

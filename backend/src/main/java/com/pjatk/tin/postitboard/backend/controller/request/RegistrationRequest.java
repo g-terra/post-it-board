@@ -1,12 +1,13 @@
-package com.pjatk.tin.postitboard.backend.request;
+package com.pjatk.tin.postitboard.backend.controller.request;
 
-import com.pjatk.tin.postitboard.backend.domain.User;
+import com.pjatk.tin.postitboard.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -16,18 +17,16 @@ import javax.validation.constraints.NotNull;
 public class RegistrationRequest {
 
 
-    @NotNull
+    @NotEmpty(message = "First name cannot be empty")
     private String firstName;
 
-    @NotNull
+    @NotEmpty(message = "Last name cannot be empty")
     private String lastName;
 
-    @NotNull
-    @Email
+    @Email(message = "The provided email is not valid")
     private String email;
 
-
-    @NotNull
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
 

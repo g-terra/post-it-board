@@ -1,14 +1,14 @@
 package com.pjatk.tin.postitboard.backend.controller;
 
-import com.pjatk.tin.postitboard.backend.response.PostsByBoardResponse;
-import com.pjatk.tin.postitboard.backend.service.BoardService;
+import com.pjatk.tin.postitboard.backend.controller.request.AddPostToBoardRequest;
+import com.pjatk.tin.postitboard.backend.controller.response.PostsByBoardResponse;
+import com.pjatk.tin.postitboard.backend.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -17,11 +17,32 @@ import java.security.Principal;
 public class PostsController {
 
 
-    private final BoardService boardService;
+    private final PostService postService;
 
     @GetMapping()
-    public PostsByBoardResponse getPosts(Principal principal, @RequestParam Long boardId) {
-        return boardService.getPosts(principal, boardId);
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@securityService.isBoardOwner(#boardId)")
+    public PostsByBoardResponse getPosts(
+            @RequestParam Long boardId,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize
+    ) {
+        return postService.getPosts(boardId, pageSize, page);
+    }
+
+
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PreAuthorize("@securityService.isBoardOwner(#request.board)")
+    public void createPost(@Valid @RequestBody AddPostToBoardRequest request) {
+        postService.createPost(request);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @PreAuthorize("@securityService.isPostOwner(#postId)")
+    public void deletePost(@RequestParam Long postId) {
+        postService.deletePost(postId);
     }
 
 }

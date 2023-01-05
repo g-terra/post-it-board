@@ -1,10 +1,12 @@
-package com.pjatk.tin.postitboard.backend.domain;
+package com.pjatk.tin.postitboard.backend.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import java.time.Instant;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,17 +21,20 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    private String title;
-
+    @Column(name = "content", nullable = false)
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)
     private User creator;
 
+    @CreationTimestamp
     private LocalDateTime creationDate;
 
+    @Column(name = "color", nullable = false ,columnDefinition = "default 'red'")
     private String color;
 
     @ManyToOne

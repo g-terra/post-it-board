@@ -1,4 +1,4 @@
-package com.pjatk.tin.postitboard.backend.domain;
+package com.pjatk.tin.postitboard.backend.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -25,13 +25,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Override

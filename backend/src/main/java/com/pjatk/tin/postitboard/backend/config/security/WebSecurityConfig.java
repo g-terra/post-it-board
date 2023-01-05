@@ -1,10 +1,9 @@
-package com.pjatk.tin.postitboard.backend.config;
+package com.pjatk.tin.postitboard.backend.config.security;
 
-import com.pjatk.tin.postitboard.backend.security.AuthEntryPointJwt;
-import com.pjatk.tin.postitboard.backend.security.AuthTokenFilter;
-import com.pjatk.tin.postitboard.backend.security.JwtUtils;
 import com.pjatk.tin.postitboard.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+
+
     private final UserService userDetailsService;
 
     private final AuthEntryPointJwt unauthorizedHandler;
@@ -33,13 +34,14 @@ public class WebSecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/**").allowedMethods("GET", "POST","PUT", "DELETE");
+
             }
         };
     }
 
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter(JwtUtils jwtUtils ,UserService userService) {
+    public AuthTokenFilter authenticationJwtTokenFilter(JwtUtils jwtUtils, UserService userService) {
         return new AuthTokenFilter(
                 jwtUtils,
                 userService
@@ -64,9 +66,8 @@ public class WebSecurityConfig {
     }
 
 
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http , AuthTokenFilter authTokenFilter , PasswordEncoder passwordEncoder) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthTokenFilter authTokenFilter, PasswordEncoder passwordEncoder) throws Exception {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

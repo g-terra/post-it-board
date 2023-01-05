@@ -27,7 +27,7 @@ export default function Footer() {
                     </ul>
                 </div>
                 <div className="w-full md:w-1/3 text-center md:text-right">
-                    <p className="text-sm mb-4 text-light">&copy; Copyright 2021</p>
+                    <p className="text-sm mb-4 text-light">&copy; Copyright 2023</p>
                     <a href="frontend/components/layout/footer#" className="text-light hover:text-gray-400">MIT License</a>
                 </div>
             </div>

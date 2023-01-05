@@ -1,4 +1,4 @@
-package com.pjatk.tin.postitboard.backend.domain;
+package com.pjatk.tin.postitboard.backend.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -20,13 +20,15 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Post> posts;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User creator;
 
     @Override

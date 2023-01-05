@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {PropTypes} from "prop-types";
 import {NavButton} from "./navButton";
-import {Avatar} from "./avatar";
 import {Logo} from "./logo";
 import {signOut, useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 NavButton.prop = {
     link: PropTypes.string.isRequired,
@@ -14,6 +14,7 @@ export default function Navbar() {
 
     const [isLogged, setIsLogged] = useState(false);
 
+    const router = useRouter();
 
     const session = useSession();
 
@@ -43,8 +44,8 @@ export default function Navbar() {
                         isLogged ?
                             <>
                                 <p>Hi {session.data.user.firstName}!</p>
-                                <NavButton text={"Logout"} onClick={signOut}/>
-                                {/*<Avatar/>*/}
+                                <NavButton text={"Logout"} onClick={async () =>
+                                    await signOut({callbackUrl: "/"})}/>
                             </>
                             :
                             <>

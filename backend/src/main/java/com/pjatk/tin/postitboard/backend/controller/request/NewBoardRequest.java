@@ -1,12 +1,13 @@
-package com.pjatk.tin.postitboard.backend.request;
+package com.pjatk.tin.postitboard.backend.controller.request;
 
 
-import com.pjatk.tin.postitboard.backend.domain.Board;
+import com.pjatk.tin.postitboard.backend.model.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class NewBoardRequest {
 
-    @NotNull
+    @NotEmpty(message = "Board name cannot be empty")
     private String name;
 
 

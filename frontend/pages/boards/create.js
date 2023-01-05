@@ -54,6 +54,7 @@ export default function CreateBoard() {
             setLoading(false);
             return router.push('/boards/'+ res.id )
         }).catch((error) => {
+            setLoading(false);
             console.log(error);
         })
 

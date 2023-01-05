@@ -1,6 +1,6 @@
-package com.pjatk.tin.postitboard.backend.response;
+package com.pjatk.tin.postitboard.backend.controller.response;
 
-import com.pjatk.tin.postitboard.backend.domain.Board;
+import com.pjatk.tin.postitboard.backend.model.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

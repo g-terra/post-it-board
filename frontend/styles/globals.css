@@ -94,7 +94,7 @@
 
 
     .color-primary {
-        @apply bg-red-400;
+        @apply bg-sky-400;
     }
 
     .color-primary-light {
@@ -184,7 +184,7 @@
         md:grid-cols-[repeat(3,minmax(250px,1fr))]
         lg:grid-cols-[repeat(4,minmax(250px,1fr))]
         xl:grid-cols-[repeat(5,minmax(250px,1fr))]
-        grid-rows-[300px_200px]
+        grid-rows-[300px_300px]
         md:grid-rows-[repeat(2,minmax(300px,1fr))]
     }
 
