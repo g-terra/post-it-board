@@ -49,7 +49,7 @@ public class PostService {
         postRepository.save(post);
 
     }
-    
+
     @Transactional
     public void deletePost(Long postId) {
         log.info("Deleting post with id: {}", postId);
