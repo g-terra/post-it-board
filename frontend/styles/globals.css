@@ -7,27 +7,27 @@
 @layer components {
 
     .post-it-font {
-        @apply font-brand;
+        @apply font-brand
     }
 
     .background-light {
-        @apply bg-amber-100;
+        @apply bg-amber-100
     }
 
     .background-dark {
-        @apply bg-amber-800;
+        @apply bg-amber-800
     }
 
     .text-light {
-        @apply text-white;
+        @apply text-white
     }
 
     .text-primary {
-        @apply text-white;
+        @apply text-white
     }
 
     .text-secondary {
-        @apply text-red-400;
+        @apply text-red-400
     }
 
     .page-container {
@@ -188,6 +188,11 @@
         md:grid-rows-[repeat(2,minmax(300px,1fr))]
     }
 
+    .color-brand-1 {
+        @apply
+        bg-brand-1
+        dark:bg-brand-1-dark
+    }
 
 }
 
