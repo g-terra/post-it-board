@@ -1,0 +1,12 @@
+.notFound {
+    position: absolute;
+    top: 40%;
+    transform: rotate(-3deg);
+    @apply text-center
+    font-brand text-4xl
+    text-black
+    p-4
+    dark:text-secondary-night
+    grid place-items-center
+    grid-cols-1
+}

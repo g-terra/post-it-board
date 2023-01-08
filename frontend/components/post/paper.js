@@ -1,4 +1,3 @@
-import {useEffect, useState} from "react";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 
 

@@ -9,6 +9,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            backgroundImage: {
+                'board': "url('/pinboard-bg.jpg')",
+                'board-dark': "url('/img/footer-texture.png')",
+            },
             colors: {
                 primary: {
                     100: colors.sky[100],

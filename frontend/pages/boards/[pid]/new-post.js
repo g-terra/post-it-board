@@ -1,63 +1,49 @@
 import {useRouter} from "next/router";
 import * as Yup from "yup";
-import {FormTemplate} from "../../../components/utils/generic-form/formTemplate";
 import React from "react";
 import postService from "../../../services/postService";
 import {useSession} from "next-auth/react";
-import {useAlertProvider} from "../../../components/utils/alerts/AlertProvider";
-import {error} from "next/dist/build/output/log";
+import {useAlertProvider} from "../../../components2/alerts/AlertProvider";
+import FormBuilderComponent, {FieldTypes} from "../../../components2/form-builder/FormBuilder.component";
 
 export default function newPost() {
 
-    const router = useRouter()
 
     const session = useSession();
-
-
+    const router = useRouter();
+    const alertProvider = useAlertProvider();
     const {pid} = router.query
 
-
-    const formDef = {
-        title: 'New Post',
-        fields: [
-            {
-                name: 'content',
-                label: 'Content',
-                placeholder: 'add here the content of your posts',
-                initialValue: '',
-                type: 'text-area',
-                minHeight: '140px',
-            },
-            {
-                name: 'color',
-                label: 'Color',
-                placeholder: '',
-                initialValue: 'red',
-                type: 'select',
-                options: [
-                    {value: 'red', label: 'Red'},
-                    {value: 'blue', label: 'Blue'},
-                    {value: 'green', label: 'Green'},
-                    {value: 'yellow', label: 'Yellow'}
-                ]
-            },
-        ],
-        submit: {
-            text: 'Create',
-            handleSubmit: async (post) => {
-                await handleSubmit(post)
-            }
+    const fields = [
+        {
+            type: FieldTypes.textArea,
+            name: "content",
+            label: "Content",
+            minLines:8,
         },
-        validationSchema: Yup.object({
-            content: Yup.string().required('Post cannot be empty').max(250, 'content is too long'),
-            color: Yup.string().required('Color is required'),
-        }),
+        {
+            name: 'color',
+            label: 'Color',
+            type: FieldTypes.select,
+            options: [
+                'red',
+                'blue',
+                'green',
+                'yellow',
+            ]
+        }
+    ];
 
-    }
 
-    const handleSubmit = async (post) => {
+    const schema = Yup.object({
+        content: Yup.string().required('Post cannot be empty').max(250, 'content is too long'),
+        color: Yup.string().required('Color is required'),
+    });
 
-        const request = {post}
+
+    const handleSubmit = (values) => {
+
+        const request = {post: values}
 
         request.post.board = pid
 
@@ -65,16 +51,27 @@ export default function newPost() {
             request.token = session.data.jwt;
         }
 
-        await postService.createPost(request)
+        postService.createPost(request).then((res) => {
+                return router.push('/boards/' + pid)
+            }
+        ).catch((error) => {
+            alertProvider.pushAlert({
+                severity: 'error',
+                message: error.message
+            })
+        })
 
-        return router.push("/boards/" + pid)
     }
 
     return (
-        <div className={'form-width m-5'}>
-            <FormTemplate {...formDef}/>
+        <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
+            <FormBuilderComponent title={"New Post"} fields={fields} onSubmit={handleSubmit} schema={schema}
+                                  submitText={"Create"}/>
         </div>
+
     )
+
+
 
 
 }

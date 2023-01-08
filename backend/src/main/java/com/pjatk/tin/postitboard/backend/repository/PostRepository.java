@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByBoardId(Long boardId , Pageable pageable);
+    Page<Post> findAllByBoardIdAndContentContains(Long boardId ,String search, Pageable pageable);
+
+
 
     void removeAllByBoard(Board board);
 

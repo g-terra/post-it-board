@@ -5,7 +5,8 @@ import localStorageBoardRepository from "../groups/localStorageBoardRepository";
 function validateWindow() {
     if (typeof window === "undefined") throw new Error("not on the browser");
 }
-const getAllPosts = async ({page, pageSize, board}) => {
+
+const getAllPosts = async ({page, pageSize, board, search = ''}) => {
 
     validateWindow()
 
@@ -14,13 +15,12 @@ const getAllPosts = async ({page, pageSize, board}) => {
 
 
     if (!boardExists) {
-
-        throw new Error( "Board not found. board:" + board);
+        throw new Error("Board not found. board:" + board);
     }
 
     const all = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
 
-    const filtered = all.filter(post => post.board === board);
+    const filtered = all.filter(post => post.board === board).filter(post => post.content.includes(search));
 
     if (page && pageSize) {
         return {
@@ -64,7 +64,6 @@ const removePost = async (id) => {
     posts.splice(index, 1);
     localStorage.setItem('posts', JSON.stringify(posts));
 };
-
 
 
 const removePostsByBoard = async (board) => {

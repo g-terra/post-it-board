@@ -1,0 +1,38 @@
+.pagination {
+    @apply w-full flex justify-center items-center gap-2;
+}
+
+.btn {
+    @apply
+    bg-secondary
+    hover:bg-secondary-light
+    dark:bg-secondary-night
+    text-xl
+    text-white
+    px-4
+    h-12
+    rounded
+    shadow-lg
+    font-bold
+    hover:scale-[101%]
+    transform
+    transition
+    duration-300
+    ease-in-out
+}
+
+.btn:disabled {
+    @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+}
+
+.nextButton {
+    @apply btn w-full w-32
+}
+
+.previousButton {
+    @apply btn w-full w-32
+}
+
+.paging {
+    @apply text-secondary dark:text-white font-bold w-full text-center;
+}

@@ -19,7 +19,6 @@ export function PostIt2({
 
     const [classes, setClasses] = useState('transition-all');
 
-    const [hide, setHide] = useState(false);
 
     const getRandomAngle = () => {
         return randomAngle.min + Math.floor(Math.random() * (randomAngle.max - randomAngle.min))

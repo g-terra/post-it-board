@@ -1,0 +1,16 @@
+
+.logo {
+    @apply
+    flex justify-center items-center gap-4
+}
+
+.logoImage {
+    @apply
+    rotate-rev-30
+    w-12
+}
+
+.logoText {
+    @apply
+    text-4xl font-brand whitespace-nowrap
+}

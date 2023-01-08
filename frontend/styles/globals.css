@@ -4,195 +4,21 @@
 @import 'tailwindcss/base.css';
 @import 'tailwindcss/utilities';
 
+html,
+body {
+    margin: 0;
+}
+
 @layer components {
 
     .post-it-font {
-        @apply font-brand
-    }
-
-    .background-light {
-        @apply bg-amber-100
-    }
-
-    .background-dark {
-        @apply bg-amber-800
-    }
-
-    .text-light {
-        @apply text-white
-    }
-
-    .text-primary {
-        @apply text-white
-    }
-
-    .text-secondary {
-        @apply text-red-400
-    }
-
-    .page-container {
-        @apply relative min-h-screen background-light
-    }
-
-    .content-wrap {
-        @apply pb-24 w-full  h-full flex flex-col items-center justify-center
-    }
-
-    .footer {
-        @apply absolute bottom-0 w-full h-24  color-primary p-2
-    }
-
-    .form-label {
-        @apply block text-lg text-light font-bold  mb-2
-    }
-
-    .form-title {
-        @apply text-2xl font-bold text-light
-    }
-
-    .form-paper {
-        @apply bg-sky-300 shadow-orange-900 shadow-md rounded w-full p-4 flex flex-col
-    }
-
-    .form-width {
-        @apply w-[85%] sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]
-    }
-
-    .text-input {
-        @apply shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight
-    }
-
-    .alert-success {
-        @apply bg-green-100 border-green-400 text-green-700
-    }
-
-    .alert-error {
-        @apply bg-red-100 border-red-400 text-red-700
-    }
-
-    .alert-info {
-        @apply bg-blue-100 border-blue-400 text-blue-700
-    }
-
-    .header {
-        @apply
-        top-0
-        w-full
-        h-36
-        md:h-20
-        text-light
-        px-32
-        color-primary
-        shadow-red-50
-        shadow-md
-        grid
-        grid-cols-1
-        md:grid-cols-3
-        justify-center
-        items-center
+        @apply font-brand;
     }
 
 
-    .color-primary {
-        @apply bg-sky-400;
-    }
 
-    .color-primary-light {
-        @apply bg-red-100;
-    }
 
-    .color-secondary {
-        @apply bg-amber-100;
-    }
 
-    .color-secondary {
-        @apply bg-amber-50;
-    }
-
-    .color-contrast {
-        @apply bg-sky-600;
-    }
-
-    .color-contrast-light {
-        @apply bg-sky-400;
-    }
-
-    .text-button {
-        @apply
-        text-light
-        font-bold
-        py-2
-        px-4
-        rounded
-        cursor-pointer
-        disabled:opacity-50
-        hover:scale-105
-        transition
-        duration-150
-        ease-in-out;
-    }
-
-    .text-button-primary {
-        @apply
-        text-button
-        hover:bg-red-500
-        disabled:bg-red-200
-        disabled:hover:bg-red-200
-        disabled:cursor-not-allowed
-    }
-
-    .btn-base {
-        @apply
-        text-light
-        font-bold
-        py-2
-        px-4
-        rounded
-        cursor-pointer
-        disabled:opacity-50
-        hover:scale-105
-        transition
-        duration-150
-        ease-in-out;
-    }
-
-    .btn-primary {
-        @apply
-        btn-base
-        color-primary
-        hover:bg-red-500
-        hover:color-primary-light;
-    }
-
-    .btn-secondary {
-        @apply
-        btn-base
-        color-contrast
-        hover:color-contrast-light;
-    }
-
-    .board-grid {
-        @apply
-        justify-evenly
-        justify-items-center
-        align-middle
-        items-center p-4
-        gap-4
-        grid
-        grid-cols-[repeat(1,minmax(250px,1fr))]
-        sm:grid-cols-[repeat(2,minmax(250px,1fr))]
-        md:grid-cols-[repeat(3,minmax(250px,1fr))]
-        lg:grid-cols-[repeat(4,minmax(250px,1fr))]
-        xl:grid-cols-[repeat(5,minmax(250px,1fr))]
-        grid-rows-[300px_300px]
-        md:grid-rows-[repeat(2,minmax(300px,1fr))]
-    }
-
-    .color-brand-1 {
-        @apply
-        bg-brand-1
-        dark:bg-brand-1-dark
-    }
 
 }
 

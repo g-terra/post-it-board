@@ -24,9 +24,9 @@ public class PostService {
     private final BoardService boardService;
     private final SecurityService securityService;
 
-    public PostsByBoardResponse getPosts(Long boardId, int pageSize, int page) {
+    public PostsByBoardResponse getPosts(Long boardId, int pageSize, int page, String search) {
 
-        Page<Post> posts = postRepository.findAllByBoardId(boardId, PageRequest.of(page, pageSize));
+        Page<Post> posts = postRepository.findAllByBoardIdAndContentContains(boardId, search, PageRequest.of(page, pageSize));
 
         return PostsByBoardResponse.from(posts);
     }
@@ -55,7 +55,6 @@ public class PostService {
         log.info("Deleting post with id: {}", postId);
         postRepository.deleteById(postId);
     }
-
 
 
 }

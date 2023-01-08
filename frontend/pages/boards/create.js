@@ -1,49 +1,35 @@
-import * as Yup from "yup";
+import React from "react";
 import {useRouter} from "next/router";
-import {FormTemplate} from "../../components/utils/generic-form/formTemplate";
-import React, {useState} from "react";
 import {useSession} from "next-auth/react";
+import {useAlertProvider} from "../../components2/alerts/AlertProvider";
+import * as yup from "yup";
+import FormBuilderComponent, {FieldTypes} from "../../components2/form-builder/FormBuilder.component";
 import boardService from "../../services/boardService";
-import Spinner from "../../components/utils/spinner/spinner";
 
 export default function CreateBoard() {
-
     const session = useSession();
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const alertProvider = useAlertProvider();
 
-
-    const formDef = {
-        title: 'New Board',
-        fields: [
-            {
-                name: 'name',
-                label: 'Name',
-                placeholder: 'Best Board Ever',
-                initialValue: '',
-                type: 'text',
-                minHeight: '140px',
-            },
-        ],
-        submit: {
-            text: 'Create',
-            handleSubmit: (post) => {
-                handleSubmit(post)
-            }
+    const fields = [
+        {
+            type: FieldTypes.text,
+            name: "name",
+            label: "Board Name",
+            placeholder: "Enter your email e.g. The best board ever",
         },
-        validationSchema: Yup.object({
-            name: Yup.string().required('Name is required')
-        }),
-
-    }
+    ];
 
 
-    const handleSubmit = (group) => {
+    const schema = yup.object().shape({
+        name: yup.string().required("Board name is required"),
+    });
 
-        setLoading(true);
+
+    const handleSubmit = (values) => {
 
         const request = {
-            group
+            group: values
         }
 
         if (session.status === 'authenticated') {
@@ -51,32 +37,21 @@ export default function CreateBoard() {
         }
 
         boardService.createBoard(request).then((res) => {
-            setLoading(false);
-            return router.push('/boards/'+ res.id )
+            return router.push('/boards/' + res.id)
         }).catch((error) => {
-            setLoading(false);
-            console.log(error);
+            alertProvider.pushAlert({
+                type: 'error',
+                message: error.message
+            })
         })
-
-    };
-
-    function Content() {
-        return (
-            <div className={'form-width'}>
-                <FormTemplate {...formDef}/>
-            </div>
-        )
     }
 
-
     return (
-
-
-        <div className={'m-3 w-full flex flex-col justify-center items-center'}>
-            {
-                loading ? <Spinner/> : <Content/>
-            }
+        <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
+            <FormBuilderComponent title={"New Board"} fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Create Board"}/>
         </div>
 
     )
+
+
 }

@@ -1,0 +1,43 @@
+.item {
+    @apply
+    bg-primary
+    dark:bg-primary-dark
+    w-[200px] h-[200px]
+    text-white
+    p-2 m-2
+    rounded-lg shadow-lg
+    dark:shadow-secondary-night
+    transition-all duration-300 ease-in-out
+    dark:hover:shadow-secondary
+    flex flex-col justify-start items-start p-4
+}
+
+.actionButton {
+    @apply
+    bg-secondary-night
+    hover:bg-secondary-light
+    dark:bg-secondary-night
+    text-white
+    w-full
+    p-2
+    rounded
+    shadow-lg
+    font-bold
+    hover:scale-[101%]
+    transform
+    transition
+    duration-300
+    ease-in-out
+}
+
+.title {
+    @apply
+    text-lg
+    font-bold
+    mb-2
+}
+
+.content {
+    @apply
+    flex-grow
+}

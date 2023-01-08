@@ -1,0 +1,25 @@
+.container {
+    display: grid;
+    grid: min-content auto 115px / 115px auto;
+    min-height: 100vh;
+}
+
+.header {
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+.main {
+    grid-column: 1 / 3;
+    @apply
+    bg-amber-50
+    dark:bg-primary-800
+}
+
+.footer {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+}
+
+
+

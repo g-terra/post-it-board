@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import boardService from "../../../services/boardService";
 
-function Popup({onCancel, onDelete}) {
+function Popup({onCancel, onAction}) {
     return (
         <div
             class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"
@@ -35,7 +35,7 @@ function Popup({onCancel, onDelete}) {
                             Cancel
                         </button>
                         <button
-                            onClick={onDelete}
+                            onClick={onAction}
                             className="btn-primary">Delete
                         </button>
                     </div>
@@ -70,12 +70,12 @@ export default function BoardDelete({onDelete}) {
 
     return (
         <div>
-            <button className={'btn-secondary'} onClick={() => {
+            <button className={'btn-secondary bg-red-500'} onClick={() => {
                 setShowModal(true);
             }}>
                 Delete this board
             </button>
-            {showModal ? <Popup onCancel={handleCancel} onDelete={handleDelete}/> : null}
+            {showModal ? <Popup onCancel={handleCancel} onAction={handleDelete}/> : null}
         </div>
     )
 }

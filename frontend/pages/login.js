@@ -1,8 +1,8 @@
-import FormBuilder, {FieldTypes} from "../components2/form-builder/FormBuilder";
+import FormBuilderComponent, {FieldTypes} from "../components2/form-builder/FormBuilder.component";
 import * as yup from "yup";
 import Link from "next/link";
 import userRepository from "../repositories/users/userRepository";
-import {useAlertProvider} from "../components/utils/alerts/AlertProvider";
+import {useAlertProvider} from "../components2/alerts/AlertProvider";
 import {useRouter} from "next/router";
 import {getCsrfToken, signIn} from "next-auth/react";
 
@@ -65,7 +65,7 @@ export default function Login({csrfToken}) {
 
     return (
         <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
-            <FormBuilder fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Login"} link={link}/>
+            <FormBuilderComponent fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Login"} link={link}/>
         </div>
 
     )
