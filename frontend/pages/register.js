@@ -1,8 +1,8 @@
-import FormBuilderComponent, {FieldTypes} from "../components2/form-builder/FormBuilder.component";
+import FormBuilderComponent, {FieldTypes} from "../components/form-builder/FormBuilder.component";
 import * as yup from "yup";
 import Link from "next/link";
 import userRepository from "../repositories/users/userRepository";
-import {useAlertProvider} from "../components2/alerts/AlertProvider";
+import {useAlertProvider} from "../components/alerts/alertProvider";
 import {useRouter} from "next/router";
 
 export default function Register() {
@@ -62,7 +62,7 @@ export default function Register() {
         alertProvider.pushAlert({
             severity: 'success', message: "Account created!"
         })
-        return router.push('/auth/login');
+        return router.push('/login');
     }
 
     return (

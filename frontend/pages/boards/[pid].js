@@ -1,13 +1,13 @@
-import ItemController from "../../components2/items-viewer/controller/itemController.component";
+import ItemController from "../../components/items-viewer/controller/itemController.component";
 import boardService from "../../services/boardService";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import {useAlertProvider} from "../../components2/alerts/AlertProvider";
-import PostsListGrid from "../../components2/posts-list/posts-list-grid/postsListGrid.component";
-import PostsListItem from "../../components2/posts-list/posts-list-item/postsListItem.component";
+import {useAlertProvider} from "../../components/alerts/alertProvider";
+import PostsListGrid from "../../components/posts-list/posts-list-grid/postsListGrid.component";
+import PostsListItem from "../../components/posts-list/posts-list-item/postsListItem.component";
 import postService from "../../services/postService";
 
-import DeleteBoardButton from "../../components2/delete-board/deleteBoardButton.component";
+import DeleteBoardButton from "../../components/delete-board-button/deleteBoardButton.component";
 
 export default function Board() {
 
@@ -33,18 +33,17 @@ export default function Board() {
 
             const results = await postService.getAllPosts(params)
 
-
             return {
                 items: results.posts || [],
                 totalPages: results.totalPages || 1
             }
 
         } catch (error) {
-            console.log(error);
             alertProvider.pushAlert({
                 severity: 'error',
-                message: 'Error fetching boards'
+                message: error.message
             })
+            return router.push('/boards')
         }
     };
 

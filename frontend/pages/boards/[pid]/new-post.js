@@ -3,10 +3,10 @@ import * as Yup from "yup";
 import React from "react";
 import postService from "../../../services/postService";
 import {useSession} from "next-auth/react";
-import {useAlertProvider} from "../../../components2/alerts/AlertProvider";
-import FormBuilderComponent, {FieldTypes} from "../../../components2/form-builder/FormBuilder.component";
+import {useAlertProvider} from "../../../components/alerts/alertProvider";
+import FormBuilderComponent, {FieldTypes} from "../../../components/form-builder/FormBuilder.component";
 
-export default function newPost() {
+export default function NewPost() {
 
 
     const session = useSession();

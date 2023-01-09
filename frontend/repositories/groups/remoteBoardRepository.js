@@ -1,9 +1,12 @@
 import axios from "axios";
+import getApiUrl from "../utils/apiUrlProvider";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 async function getAllBoards(token, page, pageSize, search) {
     try {
+
+        console.log("base url for boards: " + getApiUrl());
 
         const params = {
             page: page === 0 ? 0 : page - 1,
@@ -11,7 +14,7 @@ async function getAllBoards(token, page, pageSize, search) {
             search
         }
 
-        const {data} = await axios.get(baseUrl + 'boards', {
+        const {data} = await axios.get(getApiUrl() + 'boards', {
             params,
             headers: {
                 Authorization: `Bearer ${token}`
@@ -32,7 +35,7 @@ async function createBoard(token, group) {
     console.log("token", token);
 
     try {
-        const {data} = await axios.post(baseUrl + 'boards', group, {
+        const {data} = await axios.post(getApiUrl() + 'boards', group, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -49,7 +52,7 @@ async function removeBoard(token, id) {
     try {
         console.log("removing board: " + id)
 
-        return await axios.delete(baseUrl + "boards?boardId=" + id, {
+        return await axios.delete(getApiUrl() + "boards?boardId=" + id, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

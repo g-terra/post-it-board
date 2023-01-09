@@ -1,9 +1,9 @@
 import React from "react";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
-import {useAlertProvider} from "../../components2/alerts/AlertProvider";
+import {useAlertProvider} from "../../components/alerts/alertProvider";
 import * as yup from "yup";
-import FormBuilderComponent, {FieldTypes} from "../../components2/form-builder/FormBuilder.component";
+import FormBuilderComponent, {FieldTypes} from "../../components/form-builder/FormBuilder.component";
 import boardService from "../../services/boardService";
 
 export default function CreateBoard() {

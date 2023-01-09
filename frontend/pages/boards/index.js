@@ -1,10 +1,10 @@
-import ItemController from "../../components2/items-viewer/controller/itemController.component";
-import BoardsGrid from "../../components2/boards-list/boards-list-grid/boardsGrid.component";
+import ItemController from "../../components/items-viewer/controller/itemController.component";
+import BoardsGrid from "../../components/boards-list/boards-list-grid/boardsGrid.component";
 import boardService from "../../services/boardService";
 import {useSession} from "next-auth/react";
-import BoardsListItem from "../../components2/boards-list/boards-list-item/boardsListItem.component";
+import BoardsListItem from "../../components/boards-list/boards-list-item/boardsListItem.component";
 import {useRouter} from "next/router";
-import {useAlertProvider} from "../../components2/alerts/AlertProvider";
+import {useAlertProvider} from "../../components/alerts/alertProvider";
 
 export default function Boards() {
 

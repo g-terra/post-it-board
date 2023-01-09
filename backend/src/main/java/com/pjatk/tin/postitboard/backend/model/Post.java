@@ -21,23 +21,22 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "content", nullable = false)
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
     private User creator;
 
     @CreationTimestamp
     private LocalDateTime creationDate;
 
-    @Column(name = "color", nullable = false ,columnDefinition = "default 'red'")
+    @Column(name = "color", nullable = false)
     private String color;
 
     @ManyToOne
+    @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
     @Override

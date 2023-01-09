@@ -1,8 +1,6 @@
-import FormBuilderComponent, {FieldTypes} from "../components2/form-builder/FormBuilder.component";
+import FormBuilderComponent, {FieldTypes} from "../components/form-builder/FormBuilder.component";
 import * as yup from "yup";
-import Link from "next/link";
-import userRepository from "../repositories/users/userRepository";
-import {useAlertProvider} from "../components2/alerts/AlertProvider";
+import {useAlertProvider} from "../components/alerts/alertProvider";
 import {useRouter} from "next/router";
 import {getCsrfToken, signIn} from "next-auth/react";
 
