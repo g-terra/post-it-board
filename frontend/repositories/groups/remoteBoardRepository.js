@@ -2,7 +2,6 @@ import axios from "axios";
 import getApiUrl from "../utils/apiUrlProvider";
 
 
-
 async function getAllBoards(token, page, pageSize, search) {
     try {
 
@@ -67,10 +66,26 @@ async function removeBoard(token, id) {
 }
 
 
+async function getBoard(token, id) {
+    try {
+        const {data} = await axios.get(getApiUrl() + 'boards/' + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return data;
+    } catch (e) {
+        throw e;
+    }
+}
+
+
 const remoteBoardRepository = {
     getAllBoards,
     createBoard,
-    removeBoard
+    removeBoard,
+    getBoard
 }
 
 export default remoteBoardRepository;

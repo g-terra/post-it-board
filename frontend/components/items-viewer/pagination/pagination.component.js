@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './pagiantion.module.css'
 
-const Pagination = ({ fetchPage, totalPages, currentPage }) => {
+const Pagination = ({fetchPage, totalPages, currentPage}) => {
     const handlePrevClick = () => {
         if (currentPage > 1) {
             fetchPage(currentPage - 1);
@@ -19,7 +19,7 @@ const Pagination = ({ fetchPage, totalPages, currentPage }) => {
             <button className={styles.previousButton} onClick={handlePrevClick} disabled={currentPage === 1}>
                 Previous
             </button>
-            <span className={styles.paging }>{currentPage}/{totalPages}</span>
+            <span className={styles.paging}>{currentPage}/{totalPages === 0 ? 1 : totalPages}</span>
             <button className={styles.nextButton} onClick={handleNextClick} disabled={currentPage === totalPages}>
                 Next
             </button>

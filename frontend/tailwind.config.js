@@ -11,7 +11,6 @@ module.exports = {
         extend: {
             backgroundImage: {
                 'board': "url('/pinboard-bg.jpg')",
-                'board-dark': "url('/img/footer-texture.png')",
             },
             colors: {
                 primary: {

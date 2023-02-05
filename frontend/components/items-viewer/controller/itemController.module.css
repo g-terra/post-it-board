@@ -21,3 +21,8 @@
     grid-row: 3;
     @apply w-full
 }
+
+
+.title{
+    @apply text-2xl font-bold  text-white flex flex-col justify-center items-center
+}

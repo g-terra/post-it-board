@@ -12,11 +12,17 @@ const SearchAndCreateBar = ({search, createItem , createText , additionalControl
         createItem();
     };
 
+    const handleReset = () => {
+        setQuery('');
+        search('');
+    }
+
     return (
         <div className={styles.searchAndCreate}>
             <div className={styles.search}>
                 <input className={styles.searchInput} type="text" value={query} onChange={(event) => setQuery(event.target.value)}/>
                 <button className={styles.searchButton} onClick={handleSearch}>Search</button>
+                <button className={styles.searchButton} onClick={handleReset}>Clear</button>
             </div>
             <div className={'flex justify-center items-center'}>
                 {additionalControls}

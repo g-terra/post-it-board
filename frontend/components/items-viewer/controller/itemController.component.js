@@ -5,7 +5,15 @@ import ItemList from "../item-list/itemList.component";
 import styles from './itemController.module.css';
 import Spinner from "../../misc/spinner/spinner.component";
 
-const ItemController = ({fetchItems, createItem, itemComponent, ListWrapper, createText , additionalControls}) => {
+const ItemController = ({
+                            fetchItems,
+                            createItem,
+                            itemComponent,
+                            ListWrapper,
+                            createText,
+                            additionalControls,
+                            title = ""
+                        }) => {
     const [items, setItems] = useState([]);
     const [query, setQuery] = useState('');
     const [page, setPage] = useState(1);
@@ -34,20 +42,22 @@ const ItemController = ({fetchItems, createItem, itemComponent, ListWrapper, cre
 
     return (
         <div className={styles.grid}>
-                <div className={styles.searchBar}>
-                    <SearchAndCreateBar search={handleSearch} createItem={createItem} createText={createText} additionalControls={additionalControls}/>
-                </div>
-                <div className={styles.content}>
-                    {
-                        loading ? <Spinner/> :
-                            <ItemList items={items} ListWrapper={
-                                (props) => <ListWrapper {...props} onPageSizeChange={setPageSize}/>
-                            } ItemComponent={itemComponent}/>
-                    }
-                </div>
-                <div className={styles.pagination}>
-                    <Pagination fetchPage={handlePageChange} totalPages={totalPages} currentPage={page}/>
-                </div>
+            <div className={styles.searchBar}>
+                <div className={styles.title}>{title}</div>
+                <SearchAndCreateBar search={handleSearch} createItem={createItem} createText={createText}
+                                    additionalControls={additionalControls}/>
+            </div>
+            <div className={styles.content}>
+                {
+                    loading ? <Spinner/> :
+                        <ItemList items={items} ListWrapper={
+                            (props) => <ListWrapper {...props} onPageSizeChange={setPageSize}/>
+                        } ItemComponent={itemComponent}/>
+                }
+            </div>
+            <div className={styles.pagination}>
+                <Pagination fetchPage={handlePageChange} totalPages={totalPages} currentPage={page}/>
+            </div>
         </div>
     );
 };

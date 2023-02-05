@@ -15,7 +15,6 @@ async function getAllBoards({token, page, pageSize , search =''}) {
 }
 
 async function createBoard({token, group}) {
-    await forceDelay();
 
     if (!token) {
         return await localStorageBoardRepository.createBoard(group);
@@ -25,7 +24,6 @@ async function createBoard({token, group}) {
 }
 
 async function removeBoard({token, id}) {
-    await forceDelay();
 
     if (!token) {
         return await localStorageBoardRepository.removeBoard(id);
@@ -34,10 +32,21 @@ async function removeBoard({token, id}) {
     return await remoteBoardRepository.removeBoard(token, id);
 }
 
+async function getBoard({token, id}) {
+
+
+    if (!token) {
+        return await localStorageBoardRepository.getBoard(id);
+    }
+
+    return await remoteBoardRepository.getBoard(token, id);
+}
+
 const boardService = {
     getAllBoards,
     createBoard,
-    removeBoard
+    removeBoard,
+    getBoard
 }
 
 export default boardService;
