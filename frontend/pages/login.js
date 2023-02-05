@@ -3,6 +3,8 @@ import * as yup from "yup";
 import {useAlertProvider} from "../components/alerts/alertProvider";
 import {useRouter} from "next/router";
 import {getCsrfToken, signIn} from "next-auth/react";
+import Head from "next/head";
+import React from "react";
 
 export default function Login({csrfToken}) {
     const fields = [
@@ -63,6 +65,10 @@ export default function Login({csrfToken}) {
 
     return (
         <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
+            <Head>
+                <title>Login | Post It!</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <FormBuilderComponent fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Login"} link={link}/>
         </div>
 

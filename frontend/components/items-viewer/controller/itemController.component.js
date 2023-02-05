@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import SearchAndCreateBar from "../search-and-create/searchAnCreate.component";
 import Pagination from "../pagination/pagination.component";
 import ItemList from "../item-list/itemList.component";
@@ -30,7 +30,7 @@ const ItemController = ({
         setPage(newPage);
     };
 
-    useMemo(() => {
+    useEffect(() => {
         setLoading(true);
         fetchItems(query, page, pageSize).then((results) => {
             setItems(results.items || []);
@@ -42,8 +42,9 @@ const ItemController = ({
 
     return (
         <div className={styles.grid}>
+            <div className={styles.title}>{title}</div>
+
             <div className={styles.searchBar}>
-                <div className={styles.title}>{title}</div>
                 <SearchAndCreateBar search={handleSearch} createItem={createItem} createText={createText}
                                     additionalControls={additionalControls}/>
             </div>

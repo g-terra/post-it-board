@@ -32,7 +32,7 @@ const AlertProvider = (props) => {
         if (alerts.length > 0) {
             setTimeout(() => {
                 _setAlerts(alerts.slice(1))
-            }, 2000)
+            }, 4000)
         }
     }, [alerts])
 

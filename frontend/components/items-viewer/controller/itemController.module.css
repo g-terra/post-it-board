@@ -6,23 +6,23 @@
 }
 
 .search-bar {
-    grid-row: 1;
+    grid-row: 2;
     @apply w-full
 }
 
 .content {
-    grid-row: 2;
-
+    grid-row: 3;
     @apply w-full min-h-[65vh]
     flex flex-col gap-3 items-center justify-start
 }
 
 .pagination {
-    grid-row: 3;
+    grid-row: 4;
     @apply w-full
 }
 
 
 .title{
-    @apply text-2xl font-bold  text-white flex flex-col justify-center items-center
+    grid-row: 1;
+    @apply text-2xl font-bold  text-primary dark:text-secondary-night flex flex-col justify-center items-center
 }

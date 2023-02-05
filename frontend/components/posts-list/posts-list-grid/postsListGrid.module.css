@@ -4,7 +4,7 @@
     background-repeat: repeat;
     background-position: center;
     @apply
-    h-full border-4 border-amber-900 rounded-2xl bg-board dark:bg-none dark:bg-white dark:border-gray-400
+    h-full border-4 m-5 border-amber-900 rounded-2xl bg-board dark:bg-none dark:bg-white dark:border-gray-400
 }
 
 

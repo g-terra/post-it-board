@@ -4,6 +4,8 @@ import Link from "next/link";
 import userRepository from "../repositories/users/userRepository";
 import {useAlertProvider} from "../components/alerts/alertProvider";
 import {useRouter} from "next/router";
+import Head from "next/head";
+import React from "react";
 
 export default function Register() {
     const fields = [
@@ -67,6 +69,10 @@ export default function Register() {
 
     return (
         <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
+            <Head>
+                <title>Register | Post It!</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <FormBuilderComponent title={"Register Now!"} fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Create Account"} link={link}/>
         </div>
 

@@ -5,6 +5,8 @@ import {useSession} from "next-auth/react";
 import BoardsListItem from "../../components/boards-list/boards-list-item/boardsListItem.component";
 import {useRouter} from "next/router";
 import {useAlertProvider} from "../../components/alerts/alertProvider";
+import Head from "next/head";
+import React from "react";
 
 export default function Boards() {
 
@@ -47,6 +49,12 @@ export default function Boards() {
     }
 
     return (<div>
+
+        <Head>
+            <title>Boards | Post It!</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        </Head>
+
         <ItemController
             createText={"Create Board"}
             fetchItems={fetchItems}

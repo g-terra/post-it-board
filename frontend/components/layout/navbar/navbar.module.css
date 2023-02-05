@@ -1,7 +1,7 @@
 .navbar {
     @apply
-    flex flex-col sm:flex-row justify-between items-center
-    items-center justify-around  gap-2
+    flex flex-col sm:flex-row
+    justify-around items-center gap-2
     text-white
     w-full
     px-4

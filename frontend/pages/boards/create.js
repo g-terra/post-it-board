@@ -5,6 +5,7 @@ import {useAlertProvider} from "../../components/alerts/alertProvider";
 import * as yup from "yup";
 import FormBuilderComponent, {FieldTypes} from "../../components/form-builder/FormBuilder.component";
 import boardService from "../../services/boardService";
+import Head from "next/head";
 
 export default function CreateBoard() {
     const session = useSession();
@@ -48,6 +49,12 @@ export default function CreateBoard() {
 
     return (
         <div className={'flex flex-col w-[85%] p-3 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/3'}>
+
+            <Head>
+                <title>New Board | Post It!</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+
             <FormBuilderComponent title={"New Board"} fields={fields} onSubmit={handleSubmit} schema={schema} submitText={"Create Board"}/>
         </div>
 

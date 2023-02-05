@@ -8,7 +8,9 @@ import PostsListItem from "../../components/posts-list/posts-list-item/postsList
 import postService from "../../services/postService";
 
 import DeleteBoardButton from "../../components/delete-board-button/deleteBoardButton.component";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
+import {ChevronLeftIcon} from "@heroicons/react/24/solid";
+import Head from "next/head";
 
 export default function Board() {
 
@@ -17,8 +19,6 @@ export default function Board() {
     const alertProvider = useAlertProvider();
 
     const {pid} = router.query
-
-
     const [title, setTitle] = useState("title");
 
     useEffect(() => {
@@ -33,12 +33,11 @@ export default function Board() {
 
         if (pid) {
             boardService.getBoard(params).then((res) => {
-                console.log("board",JSON.stringify(res));
+                console.log("board", JSON.stringify(res));
                 setTitle(res.name);
             }).catch((error) => {
                 alertProvider.pushAlert({
-                    type: 'error',
-                    message: error.message
+                    type: 'error', message: error.message
                 })
             })
         }
@@ -49,10 +48,7 @@ export default function Board() {
 
         try {
             const params = {
-                board: pid,
-                search: query,
-                page: page,
-                pageSize: pageSize
+                board: pid, search: query, page: page, pageSize: pageSize
             }
 
             if (session.status === "authenticated") {
@@ -62,14 +58,12 @@ export default function Board() {
             const results = await postService.getAllPosts(params)
 
             return {
-                items: results.posts || [],
-                totalPages: results.totalPages || 1
+                items: results.posts || [], totalPages: results.totalPages || 1
             }
 
         } catch (error) {
             alertProvider.pushAlert({
-                severity: 'error',
-                message: error.message
+                severity: 'error', message: error.message
             })
             return router.push('/boards')
         }
@@ -82,6 +76,11 @@ export default function Board() {
 
     return (<div className={'w-3/4'}>
 
+        <Head>
+            <title>Board: {title} | Post It!</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        </Head>
+
         <ItemController
             createText={"Create Post"}
             fetchItems={fetchItems}
@@ -89,9 +88,7 @@ export default function Board() {
             ListWrapper={PostsListGrid}
             itemComponent={PostsListItem}
             title={title}
-            additionalControls={
-                <DeleteBoardButton boardId={pid}/>
-            }
+            additionalControls={<DeleteBoardButton boardId={pid}/>}
         />
     </div>)
 
