@@ -2,6 +2,7 @@ package com.pjatk.tin.postitboard.backend.controller;
 
 
 import com.pjatk.tin.postitboard.backend.controller.request.NewBoardRequest;
+import com.pjatk.tin.postitboard.backend.controller.response.BoardDetailsResponse;
 import com.pjatk.tin.postitboard.backend.controller.response.BoardsResponse;
 import com.pjatk.tin.postitboard.backend.controller.response.NewBoardResponse;
 import com.pjatk.tin.postitboard.backend.service.BoardService;
@@ -10,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 
 @RequiredArgsConstructor
@@ -46,5 +45,12 @@ public class BoardsController {
         boardsService.deleteBoard(boardId);
     }
 
+
+    @GetMapping("/{boardId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    @PreAuthorize("@securityService.isBoardOwner(#boardId)")
+    public BoardDetailsResponse getBoard(@PathVariable Long boardId) {
+        return boardsService.getBoardDetails(boardId);
+    }
 
 }
