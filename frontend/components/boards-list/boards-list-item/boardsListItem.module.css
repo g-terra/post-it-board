@@ -14,7 +14,7 @@
 
 .actionButton {
     @apply
-    bg-secondary-night
+    bg-secondary
     hover:bg-secondary-light
     dark:bg-secondary-night
     text-white

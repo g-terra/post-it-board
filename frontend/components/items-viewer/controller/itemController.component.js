@@ -42,8 +42,7 @@ const ItemController = ({
 
     return (
         <div className={styles.grid}>
-            <div className={styles.title}>{title}</div>
-
+            {title && <div className={styles.title}><p>{title}</p></div>}
             <div className={styles.searchBar}>
                 <SearchAndCreateBar search={handleSearch} createItem={createItem} createText={createText}
                                     additionalControls={additionalControls}/>

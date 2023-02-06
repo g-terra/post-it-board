@@ -37,7 +37,7 @@ module.exports = {
                     700: colors.teal[700],
                     800: colors.teal[800],
                     900: colors.teal[900],
-                    DEFAULT: colors.teal[500],
+                    DEFAULT: colors.emerald[400],
                     dark: colors.teal[900],
                     light: colors.teal[300],
                     night: {
