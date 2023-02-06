@@ -1,9 +1,13 @@
 import {v4 as uuidv4} from 'uuid';
 import localStoragePostRepository from "../posts/localStoragePostRepository";
 
+function fetchBoardsFromLocalStorage() {
+    return localStorage.getItem('boards') ? JSON.parse(localStorage.getItem('boards')) : [];
+}
+
 async function getAllBoards(page, pageSize, search='') {
     if (typeof window === "undefined") throw new Error("not on the browser");
-    const all = localStorage.getItem('boards') ? JSON.parse(localStorage.getItem('boards')) : [];
+    const all = fetchBoardsFromLocalStorage();
 
     const filtered = all.filter(group =>
         group.name.toLowerCase().includes(search.toLowerCase())
@@ -65,10 +69,19 @@ async function removeBoard(id) {
 }
 
 
+async function getBoard(id) {
+
+    if (typeof window === "undefined") throw new Error("not on the browser");
+    const groups = fetchBoardsFromLocalStorage();
+    const index = groups.findIndex(group => group.id === id);
+    return groups[index];
+}
+
 const localStorageBoardRepository = {
     getAllBoards,
     createBoard,
-    removeBoard
+    removeBoard,
+    getBoard
 }
 
 

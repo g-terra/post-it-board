@@ -1,5 +1,4 @@
 import userRepository from "../repositories/users/userRepository";
-import forceDelay from "../utils/forceDelay";
 
 const authenticate = async ({email, password}) => {
 

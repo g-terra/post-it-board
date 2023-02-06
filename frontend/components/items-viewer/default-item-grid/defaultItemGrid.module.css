@@ -1,0 +1,4 @@
+.defaultItemGrid{
+    @apply
+    grid gap-1 place-items-center transition-all duration-300 ease-in-out items-start w-full
+}

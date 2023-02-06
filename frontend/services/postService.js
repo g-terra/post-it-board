@@ -4,17 +4,15 @@ import forceDelay from "../utils/forceDelay";
 import {error} from "next/dist/build/output/log";
 
 
-const getAllPosts = async ({token, board, page, pageSize}) => {
-
-    await forceDelay();
+const getAllPosts = async ({token, board, page, pageSize ,search}) => {
 
     if (!token) {
         return await localStoragePostRepository.getAllPosts({
-            page, pageSize, board
+            page, pageSize, board , search
         });
     }
 
-    return await remotePostRepository.getAllPosts({token, page, pageSize, board});
+    return await remotePostRepository.getAllPosts({token, page, pageSize, board , search});
 }
 
 const createPost = async ({token, post}) => {

@@ -1,0 +1,15 @@
+.alert{
+    @apply w-3/4 flex flex-col justify-center items-center p-4 m-4 rounded border-2 shadow-sm text-center text-lg font-bold
+}
+
+.alertSuccess {
+    @apply alert bg-green-100 border-green-400 text-green-700
+}
+
+.alertError {
+    @apply alert bg-red-100 border-red-400 text-red-700
+}
+
+.alertInfo {
+    @apply alert bg-blue-100 border-blue-400 text-blue-700
+}

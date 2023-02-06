@@ -1,0 +1,26 @@
+.item {
+    @apply
+    w-[250px] h-[300px]
+    p-2 m-2
+    shadow-black shadow-sm
+    transition-all duration-300 ease-in-out
+    flex flex-col justify-start items-start
+}
+
+
+.content {
+    @apply
+    w-full
+    flex-grow
+    h-full break-words
+}
+
+.close {
+    @apply
+    text-2xl
+    cursor-pointer
+    w-full
+    flex flex-col justify-end items-end
+    transition-all duration-300 ease-in-out
+    hover:text-red-500
+}

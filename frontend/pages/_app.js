@@ -1,22 +1,19 @@
 import '../styles/globals.css'
-import Root from "../components/layout/Root";
+import Root from "../components/layout/root/root";
 import {SessionProvider, useSession} from "next-auth/react";
-import Spinner from "../components/utils/spinner/spinner";
-import AlertProvider from "../components/utils/alerts/AlertProvider";
+import Spinner from "../components/misc/spinner/spinner.component";
+import AlertProvider from "../components/alerts/alertProvider";
 
 
 export default function App({Component, pageProps: {session, ...pageProps}}) {
     return (
         <SessionProvider session={session}>
             <SessionCheck>
-
                 <Root>
                     <AlertProvider>
                         <Component {...pageProps} />
                     </AlertProvider>
-
                 </Root>
-
             </SessionCheck>
         </SessionProvider>
     )

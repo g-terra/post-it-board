@@ -1,17 +1,22 @@
 import axios from "axios";
+import getApiUrl from "../utils/apiUrlProvider";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 const userRepository = {
 
     authenticate: async ({identifier, password}) => {
 
+        console.log("using base url: " + getApiUrl())
+
         try {
-            const {data} = await axios.post(baseUrl + 'auth/token', {email: identifier, password});
+            const {data} = await axios.post(getApiUrl() + 'auth/token', {email: identifier, password});
 
             return data;
         } catch (e) {
+
+            console.log(e.response.data);
+
             throw e
         }
 
@@ -26,7 +31,7 @@ const userRepository = {
                 firstName, lastName, email, password
             }
 
-            const url = baseUrl + 'auth/register'
+            const url = getApiUrl() + 'auth/register'
 
             console.log("trying to register user", JSON.stringify(request));
 

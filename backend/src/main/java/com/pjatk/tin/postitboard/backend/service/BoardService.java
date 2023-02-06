@@ -1,5 +1,6 @@
 package com.pjatk.tin.postitboard.backend.service;
 
+import com.pjatk.tin.postitboard.backend.controller.response.BoardDetailsResponse;
 import com.pjatk.tin.postitboard.backend.model.Board;
 import com.pjatk.tin.postitboard.backend.model.User;
 import com.pjatk.tin.postitboard.backend.repository.BoardRepository;
@@ -60,10 +61,14 @@ public class BoardService {
 
     public Board getBoard(Long boardId) {
 
-
         return boardRepository.findById(boardId).orElseThrow(
                 () -> new ResourceNotFoundException("Board not found")
         );
+    }
+
+    public BoardDetailsResponse getBoardDetails(Long boardId) {
+
+        return BoardDetailsResponse.from(getBoard(boardId));
 
     }
 

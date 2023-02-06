@@ -25,9 +25,10 @@ public class PostsController {
     public PostsByBoardResponse getPosts(
             @RequestParam Long boardId,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize
+            @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize,
+            @RequestParam(value = "search", defaultValue = "") String search
     ) {
-        return postService.getPosts(boardId, pageSize, page);
+        return postService.getPosts(boardId, pageSize, page ,search);
     }
 
 

@@ -1,12 +1,14 @@
 import axios from "axios";
+import getApiUrl from "../utils/apiUrlProvider";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
-const getAllPosts = async ({token, page, pageSize, board}) => {
+
+const getAllPosts = async ({token, page, pageSize, board , search=''}) => {
     try {
-        const {data} = await axios.get(baseUrl + "posts", {
+        const {data} = await axios.get(getApiUrl() + "posts", {
                 params: {
                     page: page === 0 ? 0 : page - 1,
                     pageSize,
+                    search: search,
                     boardId: board
                 },
                 headers: {
@@ -28,7 +30,7 @@ const getAllPosts = async ({token, page, pageSize, board}) => {
 const createPost = async ({token, post}) => {
 
     try {
-        const {data} = await axios.post(baseUrl + "posts", post, {
+        const {data} = await axios.post(getApiUrl() + "posts", post, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -46,7 +48,7 @@ const removePost = async ({token, id}) => {
     try {
         console.log("removing post: " + id)
 
-        return await axios.delete(baseUrl + "posts?postId=" + id, {
+        return await axios.delete(getApiUrl() + "posts?postId=" + id, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

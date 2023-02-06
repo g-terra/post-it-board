@@ -1,0 +1,28 @@
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    @apply w-full gap-3
+}
+
+.search-bar {
+    grid-row: 2;
+    @apply w-full
+}
+
+.content {
+    grid-row: 3;
+    @apply w-full min-h-[65vh]
+    flex flex-col gap-3 items-center justify-start
+}
+
+.pagination {
+    grid-row: 4;
+    @apply w-full
+}
+
+
+.title{
+    grid-row: 1;
+    @apply text-2xl font-bold  text-primary dark:text-secondary-night flex flex-col justify-center items-center
+}

@@ -1,0 +1,26 @@
+.footer {
+    @apply
+    bottom-0
+    w-full
+    p-3
+    bg-primary dark:bg-primary-dark
+    shadow-md shadow-accent-100
+    text-white
+    flex flex-col sm:flex-row items-center justify-between gap-2
+}
+
+.footerSection {
+    @apply
+    h-full
+    w-full
+    border-b
+    p-4
+    sm:border-b-0 sm:border-r sm:border-l
+    flex flex-col items-center justify-between gap-2
+}
+
+.footerSectionTitle {
+    @apply
+    font-bold
+    text-lg
+}

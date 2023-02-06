@@ -93,6 +93,9 @@
     </dependencies>
 
 	<build>
+
+		<finalName>post-it-backend</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

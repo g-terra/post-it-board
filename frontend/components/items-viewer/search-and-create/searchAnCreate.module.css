@@ -1,0 +1,55 @@
+.searchAndCreate {
+    @apply w-full h-full flex flex-col lg:flex-row justify-between items-center gap-2;
+}
+
+.btn {
+    @apply
+    bg-secondary
+    hover:bg-secondary-light
+    dark:bg-secondary-night
+    text-xl
+    text-white
+    px-4
+    h-12
+    rounded
+    shadow-lg
+    font-bold
+    hover:scale-[101%]
+    transform
+    transition
+    duration-300
+    ease-in-out
+}
+
+.baseField {
+    @apply
+    w-full h-12
+    p-3
+    rounded
+    shadow-sm
+    border border-gray-300
+    focus:outline-none
+    focus:ring-2
+    focus:ring-secondary focus:border-transparent
+    transition
+    duration-300
+    ease-in-out;
+}
+
+.search {
+    @apply flex justify-center items-center gap-2;
+}
+
+.searchInput {
+    @apply baseField;
+}
+
+.searchButton {
+    @apply btn;
+}
+
+.createButton {
+    @apply btn;
+}
+
+

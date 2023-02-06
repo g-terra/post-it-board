@@ -6,7 +6,6 @@ export default NextAuth({
     providers: [
         CredentialsProvider({
             name: 'Post It!',
-
             credentials: {
                 email: {label: 'email', type: 'text'},
                 password: {label: 'Password', type: 'password'},
@@ -14,8 +13,10 @@ export default NextAuth({
             async authorize(credentials, req) {
                 try {
 
+                    console.log("trying to authenticate user", JSON.stringify(credentials));
 
-                    const {user, jwt}  = await userService.authenticate(
+
+                    const {user, jwt} = await userService.authenticate(
                         {
                             email: credentials.email,
                             password: credentials.password,
@@ -30,9 +31,8 @@ export default NextAuth({
             },
         }),
     ],
-    secret: process.env.JWT_SECRET,
     pages: {
-        signIn: '/auth/login',
+        signIn: '/login',
         signOut: '/',
     },
     callbacks: {
@@ -50,6 +50,9 @@ export default NextAuth({
             return token;
         },
     },
+    session: {
+        strategy: 'jwt'
+    },
 
-    debug: process.env.NODE_ENV === 'development',
+    debug: true
 });

@@ -1,205 +1,96 @@
-import {PostIt2} from "../../components/post/postIt2";
-import {useRouter} from "next/router";
-import {Board} from "../../components/board/view/board";
-import postService from "../../services/postService";
-import React, {useEffect, useState} from "react";
-import {func} from "prop-types";
-import BoardDelete from "../../components/board/view/boardDelete";
-import {useSession} from "next-auth/react";
-import Spinner from "../../components/utils/spinner/spinner";
+import ItemController from "../../components/items-viewer/controller/itemController.component";
 import boardService from "../../services/boardService";
-import {useAlertProvider} from "../../components/utils/alerts/AlertProvider";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
+import {useAlertProvider} from "../../components/alerts/alertProvider";
+import PostsListGrid from "../../components/posts-list/posts-list-grid/postsListGrid.component";
+import PostsListItem from "../../components/posts-list/posts-list-item/postsListItem.component";
+import postService from "../../services/postService";
 
+import DeleteBoardButton from "../../components/delete-board-button/deleteBoardButton.component";
+import {useEffect, useState} from "react";
+import {ChevronLeftIcon} from "@heroicons/react/24/solid";
+import Head from "next/head";
 
-export default function Index() {
-
-    const router = useRouter()
+export default function Board() {
 
     const session = useSession();
-
-    const {pid} = router.query
-
-    const [posts, setPosts] = useState([]);
-
-    const [postsPerPage, setPostsPerPage] = useState(10);
-
-    const [totalPages, setTotalPages] = useState(1);
-
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const [refresh, setRefresh] = useState(false);
-
-    const [screenWidth, setScreenWidth] = useState(2000);
-
-    const [loading, setLoading] = useState(false);
-
+    const router = useRouter();
     const alertProvider = useAlertProvider();
 
-
-    const handleResize = () => {
-        setScreenWidth(window.innerWidth)
-    }
-    React.useEffect(() => {
-        window.addEventListener("resize", handleResize, false);
-    }, []);
-
-    // define how many posts per page based on the screen size
-    const getPageSizes = () => {
-        if (screenWidth < 400) return 5;
-        if (screenWidth < 1280) return 12;
-        return 10;
-    }
-
-    useEffect(() => {
-        const newPageSize = getPageSizes();
-        if (newPageSize !== postsPerPage) {
-            setPostsPerPage(newPageSize);
-        }
-    }, [screenWidth]);
+    const {pid} = router.query
+    const [title, setTitle] = useState("title");
 
     useEffect(() => {
 
-
-        setLoading(true);
-
-        const request = {page: currentPage, pageSize: postsPerPage, board: pid}
-
-        console.log("request: " + JSON.stringify(request));
-
-        if (session.status === 'authenticated') {
-            request.token = session.data.jwt;
+        const params = {
+            id: pid,
         }
 
-        postService.getAllPosts(request).then(rest => {
-
-            setPosts(rest.posts);
-
-            if (rest.totalPages === 0) {
-                setTotalPages(1);
-                setCurrentPage(1);
-            }
-
-            if (rest.totalPages !== totalPages) {
-                setTotalPages(rest.totalPages);
-                setCurrentPage(1);
-            }
-
-
-            setLoading(false);
-
-        }).catch(error => {
-            setLoading(false);
-            alertProvider.pushAlert({type: 'error', message: error.message});
-            console.log(error);
-            return router.push('/boards');
-        });
-    }, [refresh]);
-
-
-    const handleNextPage = () => {
-        const newPage = currentPage + 1;
-        console.log("new page:", newPage);
-        setCurrentPage(newPage);
-        setRefresh(!refresh);
-    }
-
-    const handlePreviousPage = () => {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        setRefresh(!refresh);
-    }
-
-
-    const disableNext = () => {
-        return currentPage === totalPages || totalPages === 0;
-    }
-
-
-    const disablePrev = () => {
-        return currentPage === 1;
-    }
-
-
-    const handleRemove = (id) => {
-
-        const request = {id: id}
-
-        if (session.status === 'authenticated') {
-            request.token = session.data.jwt;
+        if (session.status === "authenticated") {
+            params.token = session.data.jwt;
         }
 
-        postService.removePost(request).then(() => {
-            setRefresh(!refresh);
-        });
+        if (pid) {
+            boardService.getBoard(params).then((res) => {
+                console.log("board", JSON.stringify(res));
+                setTitle(res.name);
+            }).catch((error) => {
+                alertProvider.pushAlert({
+                    type: 'error', message: error.message
+                })
+            })
+        }
+    }, [pid, session.status])
 
-    }
 
-    const handleNewPost = () => {
-        router.push(`/boards/${pid}/new-post`).then(() => window.scrollTo(0, 0));
+    const fetchItems = async (query, page, pageSize) => {
+
+        try {
+            const params = {
+                board: pid, search: query, page: page, pageSize: pageSize
+            }
+
+            if (session.status === "authenticated") {
+                params.token = session.data.jwt;
+            }
+
+            const results = await postService.getAllPosts(params)
+
+            return {
+                items: results.posts || [], totalPages: results.totalPages || 1
+            }
+
+        } catch (error) {
+            alertProvider.pushAlert({
+                severity: 'error', message: error.message
+            })
+            return router.push('/boards')
+        }
     };
 
-    const handleDeleteBoard = () => {
-
-        const request = {id: pid}
-
-        if (session.status === 'authenticated') {
-            request.token = session.data.jwt;
-        }
-
-        boardService.removeBoard(request).then(() => {
-            return router.push('/boards');
-        });
-
+    const createItem = () => {
+        return router.push('/boards/' + pid + '/new-post')
     }
 
 
-    function getTopControls() {
-        return [
-            <button className={'btn-primary'} onClick={handleNewPost}>New Post</button>,
-            <BoardDelete onDelete={handleDeleteBoard}></BoardDelete>
-        ];
-    }
+    return (<div className={'w-3/4'}>
 
-    function getBottomControls() {
-        return [
-            <button className={'btn-secondary'} onClick={handlePreviousPage}
-                    disabled={disablePrev()}>Prev</button>,
-            <p>
-                {totalPages === 0 ? 0 : currentPage} / {totalPages}
-            </p>,
-            <button className={'btn-secondary'} onClick={handleNextPage}
-                    disabled={disableNext()}>Next</button>
-        ];
-    }
+        <Head>
+            <title>Board: {title} | Post It!</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        </Head>
 
+        <ItemController
+            createText={"Create Post"}
+            fetchItems={fetchItems}
+            createItem={createItem}
+            ListWrapper={PostsListGrid}
+            itemComponent={PostsListItem}
+            title={title}
+            additionalControls={<DeleteBoardButton boardId={pid}/>}
+        />
+    </div>)
 
-    function Content() {
-        return (
-            <div>
-                <Board frameColor={'bg-gray-600'} bg={'/pinboard-bg.jpg'}
-                       topControls={getTopControls()}
-                       bottomControls={getBottomControls()}
-                >
-                    {posts.map((post, index) => {
-                        return <PostIt2
-                            key={index}
-                            height={'300px'}
-                            width={'250px'}
-                            randomAngle={{min: -2, max: 2}}
-                            content={post.content}
-                            paperColor={post.color}
-                            onClose={() => handleRemove(post.id)}
-                            footer={`${post.createdAt}   ${post.creator}`}
-                        />
-                    })}
-                </Board>
-            </div>
-        )
-    }
-
-
-    return (
-        loading ? <Spinner/> : <Content/>
-    )
 }
 

@@ -1,2 +1,6 @@
 # post-it-board
-A app to create post its
+
+Run the application with:
+```
+docker-compose up
+```
